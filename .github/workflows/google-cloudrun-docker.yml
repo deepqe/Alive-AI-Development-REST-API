@@ -53,7 +53,7 @@ on:
 env:
   PROJECT_ID: feisty-legend-179317 # TODO: update Google Cloud project id
   GAR_LOCATION: us-central1 # TODO: update Artifact Registry location
-  SERVICE: mobile_services # TODO: update Cloud Run service name
+  SERVICE: mobile-services # TODO: update Cloud Run service name
   REGION: us-central1 # TODO: update Cloud Run service region
   REPO:  genai-dev
 jobs:
