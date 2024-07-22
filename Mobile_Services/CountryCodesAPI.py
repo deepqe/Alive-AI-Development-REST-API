@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from flask import Blueprint, Flask, jsonify, request
 from google.cloud.sql.connector import Connector, IPTypes
 
-
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.ERROR)
 logging.basicConfig(level=logging.WARNING)
@@ -57,16 +56,13 @@ class CountryCodes_API:
     def __init__(self):
         self.app = Flask(__name__)
         self.CountryCodes_blueprint = Blueprint('CountryCodes', __name__)
-        self.CountryCodes_blueprint.add_url_rule(rule='/', endpoint='CountryCodes', view_func=self.CountryCodesData, methods=['POST'])
+        self.CountryCodes_blueprint.add_url_rule(rule='/CountryCodes', endpoint='CountryCodes', view_func=self.CountryCodesData, methods=['POST'])
         self.CountryCodes_ = CountryCodes()
         
     def CountryCodesData(self):
         try:
-            print(f"request - {request}")
-
-            token = request.get_json()
-            print(f"token - {token}")
-            if token["token"] == "CountryCodes":
+            req = request.get_json()
+            if req["user"] == "Admin" and req["password"] == "GenAI@7070" and req["token"] == "GenAI-CountryCodes":
                 data = self.CountryCodes_.CountryCodeDataTable()
             
                 response = {
