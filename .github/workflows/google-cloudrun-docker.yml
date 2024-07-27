@@ -108,7 +108,7 @@ jobs:
          DETECTED_CHANGES: "${{ needs.detect_changes.outputs.changed_directory }}"
 
 
-deploy_Mobile_Services:
+  deploy_Mobile_Services:
 
     
     needs: detect_changes
