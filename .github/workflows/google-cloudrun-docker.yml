@@ -130,6 +130,7 @@ jobs:
         if: steps.filter.outputs.Mobile_Services == 'true'
         run: echo ${{ steps.deploy.outputs.url }}
 
+################################################## PIPELINE FOR EMAIL_SERVICE #########################################################
 
   deploy_Email_Services:
     if: True #contains(github.event.head_commit.modified, 'Email_Services') || contains(github.event.head_commit.added, 'Email_Services') 
