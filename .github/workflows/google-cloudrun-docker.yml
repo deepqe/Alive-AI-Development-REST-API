@@ -118,7 +118,7 @@ jobs:
     steps:
 
       - name: Print Detection Result
-        run: echo "Detected Changes: ${DETECTED_CHANGES}"
+        run: echo "${DETECTED_CHANGES}"
         env:
           DETECTED_CHANGES: "${{ needs.detect_changes.outputs.changed_directory }}"
 
