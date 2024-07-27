@@ -1,4 +1,4 @@
 Flask>=2.2.5
 pymysql>=1.1.1
-python-dotenv>=0.19.2
+python-dotenv>=0.19.1
 cloud-sql-python-connector[pymysql]>=1.11.0
