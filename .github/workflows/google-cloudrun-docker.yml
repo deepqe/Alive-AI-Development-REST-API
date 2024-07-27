@@ -102,8 +102,13 @@ jobs:
             return filteredChanges.length > 0 ? filteredChanges.join(', ') : null;
 
 
+      - name: Print Detection Result
+        run: echo "${DETECTED_CHANGES}"
+        env:
+         DETECTED_CHANGES: "${{ needs.detect_changes.outputs.changed_directory }}"
 
-  deploy_Mobile_Services:
+
+deploy_Mobile_Services:
 
     
     needs: detect_changes
@@ -116,12 +121,7 @@ jobs:
     env:
       SERVICE: mobile-services # TODO: update Cloud Run service name
     steps:
-
-      - name: Print Detection Result
-        run: echo "${DETECTED_CHANGES}"
-        env:
-          DETECTED_CHANGES: "${{ needs.detect_changes.outputs.changed_directory }}"
-
+      
       - name: Checkout
         uses: actions/checkout@v2
 
