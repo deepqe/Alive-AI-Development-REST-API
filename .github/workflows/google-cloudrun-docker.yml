@@ -46,7 +46,8 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+    - main
 
   workflow_dispatch : 
 
