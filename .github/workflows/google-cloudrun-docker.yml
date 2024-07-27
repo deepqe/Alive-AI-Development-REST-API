@@ -46,7 +46,9 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      - 'Alive-AI-Development-REST-API/**'
+
 
   workflow_dispatch : 
 
@@ -57,9 +59,25 @@ env:
   REPO:  genai-dev
 
 jobs:
+  detect_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed_directory: ${{ steps.check.outputs.directory }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check Changed Directory
+        id: check
+        run: |
+          CHANGED_DIR=$(git diff --name-only HEAD^ HEAD | grep -E 'Mobile_Services/|Email_Services/')
+          echo "CHANGED_DIR=$CHANGED_DIR" >> $GITHUB_ENV
+          echo "::set-output name=directory::$CHANGED_DIR"
+
+
+
   deploy_Mobile_Services:
-    if: True #contains(github.event.head_commit.modified, 'Mobile_Services') || contains(github.event.head_commit.added, 'Mobile_Services') 
-    # Add 'id-token' with the intended permissions for workload identity federation
+    needs: detect_changes
+    if: needs.detect_changes.outputs.changed_directory == 'Mobile_Services/*'
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -120,8 +138,8 @@ jobs:
 
 
   deploy_Email_Services:
-    if: True #contains(github.event.head_commit.modified, 'Email_Services') || contains(github.event.head_commit.added, 'Email_Services') 
-    # Add 'id-token' with the intended permissions for workload identity federation
+    needs: detect_changes
+    if: needs.detect_changes.outputs.changed_directory == 'Email_Services/*'
     permissions:
       contents: 'read'
       id-token: 'write'
