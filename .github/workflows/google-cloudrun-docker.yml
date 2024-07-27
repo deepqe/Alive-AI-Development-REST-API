@@ -104,6 +104,8 @@ jobs:
 
 
   deploy_Mobile_Services:
+
+    
     needs: detect_changes
     if: contains(needs.detect_changes.outputs.changed_directory, 'Mobile_Services/')
     permissions:
@@ -114,6 +116,12 @@ jobs:
     env:
       SERVICE: mobile-services # TODO: update Cloud Run service name
     steps:
+
+      - name: Print Detection Result
+        run: echo "Detected Changes: ${DETECTED_CHANGES}"
+        env:
+          DETECTED_CHANGES: "${{ needs.detect_changes.outputs.changed_directory }}"
+
       - name: Checkout
         uses: actions/checkout@v2
 
