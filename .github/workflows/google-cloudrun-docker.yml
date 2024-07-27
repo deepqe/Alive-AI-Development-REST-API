@@ -46,9 +46,7 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    paths:
-      - 'Mobile_Services/**'
-      - 'Email_Services/**'
+    branches: [ "main" ]
 
   workflow_dispatch : 
 
@@ -59,59 +57,9 @@ env:
   REPO:  genai-dev
 
 jobs:
-  detect_changes:
-    runs-on: ubuntu-latest
-    outputs:
-      changed_directory: ${{ steps.check.outputs.directory }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Detect Changed Directory
-        id: script
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const { owner, repo } = context.repo;
-            const { data: refs } = await github.rest.repos.listCommits({
-              owner,
-              repo,
-              direction: 'desc',
-              limit: 2
-            });
-            const headCommitSha = refs[0].sha;
-            const headCommitMessage = refs[0].commit.message;
-            const headCommitAuthorName = refs[0].commit.author.name;
-            const headCommitAuthorEmail = refs[0].commit.author.email;
-
-            // Assuming the last commit is the one we're interested in
-            const changedFiles = await github.rest.repos.compareCommits({
-              owner,
-              repo,
-              base: 'main',
-              head: headCommitSha
-            }).then(({ data }) => {
-              return data.files.map(file => file.filename);
-            });
-
-            // Filter for changes in Mobile_Services/ or Email_Services/
-            const filteredChanges = changedFiles.filter(file =>
-              file.includes('Mobile_Services/') || file.includes('Email_Services/')
-            );
-
-            return filteredChanges.length > 0 ? filteredChanges.join(', ') : null;
-
-
-      - name: Print Detection Result
-        run: echo "${DETECTED_CHANGES}"
-        env:
-         DETECTED_CHANGES: "${{ needs.detect_changes.outputs.changed_directory }}"
-
-
   deploy_Mobile_Services:
-
-    
-    needs: detect_changes
+    if: True #contains(github.event.head_commit.modified, 'Mobile_Services') || contains(github.event.head_commit.added, 'Mobile_Services') 
+    # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -120,7 +68,6 @@ jobs:
     env:
       SERVICE: mobile-services # TODO: update Cloud Run service name
     steps:
-      
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -173,8 +120,8 @@ jobs:
 
 
   deploy_Email_Services:
-    needs: detect_changes
-    if: needs.detect_changes.outputs.changed_directory == 'Email_Services/*'
+    if: True #contains(github.event.head_commit.modified, 'Email_Services') || contains(github.event.head_commit.added, 'Email_Services') 
+    # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
       id-token: 'write'
