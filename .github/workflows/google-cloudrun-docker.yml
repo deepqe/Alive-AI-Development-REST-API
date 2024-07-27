@@ -66,10 +66,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
+      - name: Initialize Git
+        run: git init
+      
+      - name: Fetch Latest Changes
+        run: git fetch origin main
+      
       - name: Check Changed Directory
         id: check
         run: |
-          CHANGED_DIR=$(git diff --name-only HEAD~1 HEAD | grep -E 'Mobile_Services/|Email_Services/')
+          CHANGED_DIR=$(git diff --name-only FETCH_HEAD..origin/main | grep -E 'Mobile_Services/|Email_Services/')
           echo "CHANGED_DIR=$CHANGED_DIR" >> $GITHUB_ENV
           echo "::set-output name=directory::$CHANGED_DIR"
 
