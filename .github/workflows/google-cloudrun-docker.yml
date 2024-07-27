@@ -69,7 +69,7 @@ jobs:
     env:
       SERVICE: mobile-services # TODO: update Cloud Run service name
     steps:
-      
+  
       - uses: actions/checkout@v2
 
       - uses: dorny/paths-filter@v2
@@ -142,9 +142,14 @@ jobs:
     env:
       SERVICE: email-services # TODO: update Cloud Run service name
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
+    
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            Email_Services:
+              - 'Email_Services/**' 
       #- name: Google Auth
       #  id: auth
       #  uses: 'google-github-actions/auth@v0'
@@ -155,6 +160,7 @@ jobs:
 
       # NOTE: Alternative option - authentication via credentials json
       - name: Google Auth
+        if: steps.filter.outputs.Email_Services == 'true'
         id: auth
         uses: 'google-github-actions/auth@v0'
         with:
@@ -172,6 +178,7 @@ jobs:
       #    registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Container
+        if: steps.filter.outputs.Email_Services == 'true'
         run: |-
           gcloud auth configure-docker us-central1-docker.pkg.dev
           docker build --build-arg APP_DIR=Email_Services --build-arg SERVICE_NAME=OTPEmailAPI -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.SERVICE }}:${{ github.sha }}" ./
@@ -180,6 +187,7 @@ jobs:
       # END - Docker auth and build
 
       - name: Deploy to Cloud Run
+        if: steps.filter.outputs.Email_Services == 'true'
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
@@ -190,4 +198,5 @@ jobs:
           port: 5000
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
+        if: steps.filter.outputs.Email_Services == 'true'
         run: echo ${{ steps.deploy.outputs.url }}        
