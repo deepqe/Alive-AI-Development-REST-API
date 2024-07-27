@@ -58,7 +58,7 @@ env:
 
 jobs:
   deploy_Mobile_Services:
-    if: contains(github.event.head_commit.modified, 'Mobile_Services') || contains(github.event.head_commit.added, 'Mobile_Services') 
+    if: True #contains(github.event.head_commit.modified, 'Mobile_Services') || contains(github.event.head_commit.added, 'Mobile_Services') 
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
@@ -120,7 +120,7 @@ jobs:
 
 
   deploy_Email_Services:
-    if: contains(github.event.head_commit.modified, 'Email_Services') || contains(github.event.head_commit.added, 'Email_Services') 
+    if: True #contains(github.event.head_commit.modified, 'Email_Services') || contains(github.event.head_commit.added, 'Email_Services') 
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
