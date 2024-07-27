@@ -112,7 +112,6 @@ jobs:
 
     
     needs: detect_changes
-    if: contains(needs.detect_changes.outputs.changed_directory, 'Mobile_Services/')
     permissions:
       contents: 'read'
       id-token: 'write'
