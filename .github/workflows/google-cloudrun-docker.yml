@@ -47,8 +47,8 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     paths:
-      - 'Alive-AI-Development-REST-API/**'
-
+      - 'Mobile_Services/**'
+      - 'Email_Services/**'
 
   workflow_dispatch : 
 
