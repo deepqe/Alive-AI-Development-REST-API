@@ -203,7 +203,7 @@ jobs:
         run: echo ${{ steps.deploy.outputs.url }}        
 
 
-################################################## PIPELINE FOR EMAIL_SERVICE #########################################################
+################################################## PIPELINE FOR LOGIN_SERVICE #########################################################
 
   deploy_Login_Services:
     if: True #contains(github.event.head_commit.modified, 'Email_Services') || contains(github.event.head_commit.added, 'Email_Services') 
