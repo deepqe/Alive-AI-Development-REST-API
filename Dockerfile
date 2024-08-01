@@ -14,7 +14,6 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 COPY /${APP_DIR}/. /${APP_DIR}
 
-EXPOSE 5000
 
 RUN echo '#!/bin/sh' > /startup.sh && \
     echo 'python '${SERVICE_NAME}'.py' >> /startup.sh && \
