@@ -234,7 +234,7 @@ jobs:
 
       # NOTE: Alternative option - authentication via credentials json
       - name: Google Auth
-        if: steps.filter.outputs.Email_Services == 'true'
+        if: steps.filter.outputs.Login_Services == 'true'
         id: auth
         uses: 'google-github-actions/auth@v0'
         with:
