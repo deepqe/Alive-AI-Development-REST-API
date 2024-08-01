@@ -12,6 +12,8 @@ logging.basicConfig(level=logging.WARNING)
 
 load_dotenv(dotenv_path='.env')
 
+port = int(os.getenv('PORT', 5000))
+
 class EmailOTP:
     
     def __init__(self):
@@ -101,7 +103,7 @@ class EmailOTP_API:
         try:
             
             self.app.register_blueprint(self.GenerateOTP_blueprint)
-            self.app.run(debug=True, host='0.0.0.0')
+            self.app.run(debug=True, host='0.0.0.0', port=port)
         except Exception as e:
             logging.error('An Error Occured: ', exc_info=e)
             raise e

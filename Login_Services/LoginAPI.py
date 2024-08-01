@@ -8,8 +8,10 @@ from google.cloud.sql.connector import Connector, IPTypes
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.ERROR)
 logging.basicConfig(level=logging.WARNING)
-port = int(os.getenv('PORT', 5000))
+
 load_dotenv(dotenv_path='.env')
+
+port = int(os.getenv('PORT', 5000))
 
 class Login:
     def __init__(self):

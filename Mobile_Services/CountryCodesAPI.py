@@ -11,6 +11,8 @@ logging.basicConfig(level=logging.WARNING)
 
 load_dotenv(dotenv_path='.env')
 
+port = int(os.getenv('PORT', 5000))
+
 class CountryCodes:
     def __init__(self):
         self.USER = os.getenv("USER")
@@ -92,7 +94,7 @@ class CountryCodes_API:
     def run(self):
         try:
             self.app.register_blueprint(self.CountryCodes_blueprint)
-            self.app.run(debug=True, host='0.0.0.0')
+            self.app.run(debug=True, host='0.0.0.0', port=port)
         except Exception as e:
             logging.error('An Error Occured: ', exc_info=e)
             raise e
