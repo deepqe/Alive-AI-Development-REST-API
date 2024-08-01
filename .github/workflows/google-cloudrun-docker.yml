@@ -206,7 +206,7 @@ jobs:
 ################################################## PIPELINE FOR LOGIN_SERVICE #########################################################
 
   deploy_Login_Services:
-    if: True #contains(github.event.head_commit.modified, 'Email_Services') || contains(github.event.head_commit.added, 'Email_Services') 
+    if: True #contains(github.event.head_commit.modified, 'Login_Services') || contains(github.event.head_commit.added, 'Login_Services') 
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
