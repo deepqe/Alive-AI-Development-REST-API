@@ -261,7 +261,7 @@ jobs:
       # END - Docker auth and build
 
       - name: Deploy to Cloud Run
-        if: steps.filter.outputs.Email_Services == 'true'
+        if: steps.filter.outputs.Login_Services == 'true'
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
