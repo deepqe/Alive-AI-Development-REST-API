@@ -252,7 +252,7 @@ jobs:
       #    registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Container
-        if: steps.filter.outputs.Email_Services == 'true'
+        if: steps.filter.outputs.Login_Services == 'true'
         run: |-
           gcloud auth configure-docker us-central1-docker.pkg.dev
           docker build --build-arg APP_DIR=Login_Services --build-arg SERVICE_NAME=LoginAPI -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.SERVICE }}:${{ github.sha }}" ./
