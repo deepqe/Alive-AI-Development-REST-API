@@ -359,7 +359,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      SERVICE: Query-Services # TODO: update Cloud Run service name
+      SERVICE: query-services # TODO: update Cloud Run service name
     steps:
     
       - uses: actions/checkout@v2
