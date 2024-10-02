@@ -89,7 +89,7 @@ class UserQueryAPI:
         self.user_query = UserQuery()
         self.blueprint = Blueprint('UserQuery', __name__)
         self.blueprint.add_url_rule(
-            rule='/UserQuery',
+            rule='/',
             endpoint='UserQuery',
             view_func=self.User_Query,
             methods=['POST']
