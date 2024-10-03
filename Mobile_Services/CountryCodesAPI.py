@@ -83,7 +83,7 @@ class CountryCodesAPI:
         self.country_codes = CountryCodes()
         self.blueprint = Blueprint('CountryCodes', __name__)
         self.blueprint.add_url_rule(
-            rule='/CountryCodes',
+            rule='/',
             endpoint='CountryCodes',
             view_func=self.Country_Codes_Data,
             methods=['POST']
